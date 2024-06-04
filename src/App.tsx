@@ -15,7 +15,7 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
-
+import Acceuil from'./pages/Dashboard/Acceuil';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -39,6 +39,15 @@ function App() {
             <>
               <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <ECommerce />
+            </>
+          }
+        />
+         <Route
+          path="/acceuil"
+          element={
+            <>
+              <PageTitle title="acceuil | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <Acceuil />
             </>
           }
         />
