@@ -1,10 +1,6 @@
+
 import React from 'react';
-import CardDataStats from '../../components/CardDataStats';
-import ChartOne from '../../components/Charts/ChartOne';
-import ChartThree from '../../components/Charts/ChartThree';
-import ChartTwo from '../../components/Charts/ChartTwo';
-import ChatCard from '../../components/Chat/ChatCard';
-import MapOne from '../../components/Maps/MapOne';
+
 import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Package } from '../../types/package';
@@ -36,9 +32,17 @@ const packageData: Package[] = [
     status: 'désactivé',
   },
 ];
-const ECommerce: React.FC = () => {
+const Archive: React.FC = () => {
   return (
     <DefaultLayout>
+
+<br></br>
+                <button style={{ backgroundColor: '#FE5551' }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
+                 
+                  Liste Archive
+                </button>
+
+
       <TableThree />
 
 
@@ -55,4 +59,4 @@ const ECommerce: React.FC = () => {
   );
 };
 
-export default ECommerce;
+export default Archive;

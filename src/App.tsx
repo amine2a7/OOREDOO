@@ -16,6 +16,8 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Acceuil from'./pages/Dashboard/Acceuil';
+import Archive from './pages/Dashboard/Archive';
+import ListeVisite from './pages/Dashboard/ListeVisite';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -150,9 +152,29 @@ function App() {
             </>
           }
         />
+        <Route
+          path="/Visites"
+          element={
+            <>
+              <PageTitle title="Visites " />
+              <ListeVisite />
+            </>
+          }
+        />
+        <Route
+          path="/Archive"
+          element={
+            <>
+              <PageTitle title="Archive " />
+              <Archive />
+            </>
+          }
+        />
       </Routes>
     </>
   );
 }
 
 export default App;
+
+
