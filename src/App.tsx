@@ -37,7 +37,7 @@ function App() {
           index
           element={
             <>
-              <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="eCommerce Dashboard " />
               <ECommerce />
             </>
           }
@@ -46,7 +46,7 @@ function App() {
           path="/acceuil"
           element={
             <>
-              <PageTitle title="acceuil | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Acceuil " />
               <Acceuil />
             </>
           }
@@ -55,7 +55,7 @@ function App() {
           path="/calendar"
           element={
             <>
-              <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Calendar " />
               <Calendar />
             </>
           }
@@ -64,7 +64,7 @@ function App() {
           path="/profile"
           element={
             <>
-              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Profile " />
               <Profile />
             </>
           }
@@ -91,7 +91,7 @@ function App() {
           path="/tables"
           element={
             <>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Tables " />
               <Tables />
             </>
           }
