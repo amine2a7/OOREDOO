@@ -13,7 +13,8 @@ import SwitcherOne from '../../components/Switchers/SwitcherOne';
 import SwitcherThree from '../../components/Switchers/SwitcherThree';
 import SwitcherTwo from '../../components/Switchers/SwitcherTwo';
 import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne';
-import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
+import SelectBE from '../../components/Forms/SelectGroup/selectBE';
+import SelectB from '../../components/Forms/SelectGroup/selectB';
 import MultiSelect from '../../components/Forms/MultiSelect';
 const ECommerce: React.FC = () => {
   return (
@@ -102,7 +103,7 @@ const ECommerce: React.FC = () => {
                 </div>
                 
                 <MultiSelect id="multiSelect" />
-              <SelectGroupTwo />
+             <SelectB/>
              
                 
 
@@ -149,7 +150,7 @@ const ECommerce: React.FC = () => {
 
                 
 
-                <div className="mb-5.5">
+                {/* <div className="mb-5.5">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Badge disponible
                   </label>
@@ -158,8 +159,8 @@ const ECommerce: React.FC = () => {
                     placeholder="Re-enter password"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
-                </div>
-
+                </div> */}
+<SelectBE/>
                 <br></br>
                 <button style={{ backgroundColor: '#FE5551' ,width:400 ,height:40}} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
                  
