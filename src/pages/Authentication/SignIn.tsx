@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../../images/logo/logo3.png';
 import phone from '../../images/logo/phone.png';
 import perso from '../../images/logo/perso.png';
+import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
 
 const SignIn: React.FC = () => {
   const styles = {
@@ -110,7 +111,8 @@ const SignIn: React.FC = () => {
                     </span>
                   </div>
                 </div>
-
+                <SelectGroupTwo/>
+                <br></br>
                 <div className="mb-5">
                   <input
                     type="submit"

@@ -31,14 +31,16 @@ const packageData: Package[] = [
     status: 'désactivé',
   },
 ];  
-const ListeVisite: React.FC = () => {
+const UserListe: React.FC = () => {
   return (
     <DefaultLayout>
         <br></br>
-                <button style={{ backgroundColor: '#FE5551' }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
+        
+                <button  style={{ backgroundColor: '#FF0000' ,width:600 ,height:40 }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
                  
-                  Liste Des Visites
+                  Liste Des des utilisateurs
                 </button>
+                <br></br>
       <TableThree />
 
 
@@ -55,4 +57,4 @@ const ListeVisite: React.FC = () => {
   );
 };
 
-export default ListeVisite;
+export default UserListe;

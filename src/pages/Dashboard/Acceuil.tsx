@@ -22,8 +22,8 @@ const ECommerce: React.FC = () => {
        
         <Link
               to="#"
-              style={{ backgroundColor: '#FF0000' }}
-              className="inline-flex items-center justify-center gap-2.5 bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              style={{ backgroundColor: '#FF0000' ,width:200 ,height:20}}
+              className="inline-flex items-center  rounded-md bg-primary  justify-center gap-2.5 bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
              
               Nouvelle Visite
@@ -32,9 +32,9 @@ const ECommerce: React.FC = () => {
             
             <br></br>
             <Link
-            style={{ backgroundColor: '#FF0000' }}
+            style={{ backgroundColor: '#FF0000' ,width:250 ,height:20}}
               to="#"
-              className="inline-flex items-center justify-center gap-2.5 bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              className="inline-flex items-center  rounded-md bg-primary  justify-center gap-2.5 bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
             >
               
                 
@@ -43,7 +43,7 @@ const ECommerce: React.FC = () => {
 
        
       </div>
-   <br></br>
+   
      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           {/* <!-- Contact Form --> */}
@@ -108,12 +108,12 @@ const ECommerce: React.FC = () => {
 
                
 <br></br>
-                <button style={{ backgroundColor: '#FE5551' }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
+                <button style={{ backgroundColor: '#FE5551',width:400 ,height:40 }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
                  
                   Anuller
                 </button>
                 <br></br>
-                <button style={{ backgroundColor: '#0FAC71' }} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
+                <button style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                   Valide
                 </button>
               </div>
@@ -161,12 +161,12 @@ const ECommerce: React.FC = () => {
                 </div>
 
                 <br></br>
-                <button style={{ backgroundColor: '#FE5551' }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
+                <button style={{ backgroundColor: '#FE5551' ,width:400 ,height:40}} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
                  
                   Anuller
                 </button>
                 <br></br>
-                <button style={{ backgroundColor: '#0FAC71' }} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
+                <button style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                   Valide
                 </button>
               </div>

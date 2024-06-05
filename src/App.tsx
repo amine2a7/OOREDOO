@@ -18,6 +18,7 @@ import Buttons from './pages/UiElements/Buttons';
 import Acceuil from'./pages/Dashboard/Acceuil';
 import Archive from './pages/Dashboard/Archive';
 import ListeVisite from './pages/Dashboard/ListeVisite';
+import UserListe from './pages/Dashboard/UserListe';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -158,6 +159,15 @@ function App() {
             <>
               <PageTitle title="Visites " />
               <ListeVisite />
+            </>
+          }
+        />
+        <Route
+          path="/User"
+          element={
+            <>
+              <PageTitle title="Utilisateurs " />
+              <UserListe />
             </>
           }
         />
