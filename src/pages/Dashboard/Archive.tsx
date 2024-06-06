@@ -1,10 +1,9 @@
 
 import React from 'react';
 
-import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Package } from '../../types/package';
-import TableThree from '../../components/Tables/TableThree';
+import TableOne from '../../components/Tables/TableOne';
 
 const packageData: Package[] = [
   {
@@ -43,7 +42,7 @@ const Archive: React.FC = () => {
                 </button>
 
 
-      <TableThree />
+      <TableOne />
 
 
 

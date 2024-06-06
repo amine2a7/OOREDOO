@@ -8,6 +8,52 @@ const selectB: React.FC = () => {
     setIsOptionSelected(true);
   };
 
+  const [Badge, setBadge] = React.useState([]);
+  const token = "c"
+
+  if(token == "b"){
+    React.useEffect(() => {
+      fetch("http://localhost:5000/badge/unavailable-visitorsZ1")
+        .then((res) => res.json())
+        .then((result) => {
+          setBadge(result);
+        });
+    }, []);
+  }else if(token == "a"){
+    React.useEffect(() => {
+      fetch("http://localhost:5000/badge/unavailable-visitorsZ2")
+        .then((res) => res.json())
+        .then((result) => {
+          setBadge(result);
+        });
+    }, []);
+  }
+  else if(token == "d"){
+    React.useEffect(() => {
+      fetch("http://localhost:5000/badge/unavailable-visitorscharguia")
+        .then((res) => res.json())
+        .then((result) => {
+          setBadge(result);
+        });
+    }, []);
+  }
+  else if(token == "c"){
+    React.useEffect(() => {
+      fetch("http://localhost:5000/badge/unavailable-visitorssfax")
+        .then((res) => res.json())
+        .then((result) => {
+          setBadge(result);
+        });
+    }, []);
+  }else{
+  React.useEffect(() => {
+    fetch("http://localhost:5000/badge/getAllBadges")
+      .then((res) => res.json())
+      .then((result) => {
+        setBadge(result);
+      });
+  }, []);
+  }
   return (
     <div className="mb-4.5">
       <label className="mb-2.5 block text-black dark:text-white">
@@ -29,17 +75,13 @@ const selectB: React.FC = () => {
           <option value="" disabled className="text-body dark:text-bodydark">
             Choisir Badge
           </option>
-          <option value="USA" className="text-body dark:text-bodydark">
-            USA
+          {Badge.map((badge) => (
+          <option value={badge.identifiant} className="text-body dark:text-bodydark">
+            {badge.identifiant}
           </option>
-          <option value="UK" className="text-body dark:text-bodydark">
-            UK
-          </option>
-          <option value="Canada" className="text-body dark:text-bodydark">
-            Canada
-          </option>
+          ))}
         </select>
-
+        
         <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
           <svg
             className="fill-current"
