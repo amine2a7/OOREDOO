@@ -1,18 +1,8 @@
 import React from 'react';
-import CardDataStats from '../../components/CardDataStats';
-import ChartOne from '../../components/Charts/ChartOne';
-import ChartThree from '../../components/Charts/ChartThree';
-import ChartTwo from '../../components/Charts/ChartTwo';
-import ChatCard from '../../components/Chat/ChatCard';
-import MapOne from '../../components/Maps/MapOne';
-import TableOne from '../../components/Tables/TableOne';
+
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Link } from 'react-router-dom';
-import SwitcherFour from '../../components/Switchers/SwitcherFour';
-import SwitcherOne from '../../components/Switchers/SwitcherOne';
-import SwitcherThree from '../../components/Switchers/SwitcherThree';
-import SwitcherTwo from '../../components/Switchers/SwitcherTwo';
-import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne';
+
 import SelectBE from '../../components/Forms/SelectGroup/selectBE';
 import SelectB from '../../components/Forms/SelectGroup/selectB';
 import MultiSelect from '../../components/Forms/MultiSelect';
