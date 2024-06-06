@@ -18,6 +18,15 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
   const dropdownRef = useRef<any>(null);
   const trigger = useRef<any>(null);
 
+  const [Employee, setEmployee] = React.useState([]);
+    React.useEffect(() => {
+      fetch("http://localhost:5000/employee/getAllEmployees")
+        .then((res) => res.json())
+        .then((result) => {
+          setEmployee(result);
+        });
+    }, []);
+
   useEffect(() => {
     const loadOptions = () => {
       const select = document.getElementById(id) as HTMLSelectElement | null;
@@ -93,17 +102,22 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
       return () => document.removeEventListener('click', clickHandler);
     });
 
+    
+
+
   return (
     <div className="relative z-50">
       <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-        Multiselect Dropdown
+        Personel
       </label>
       <div>
         <select className="hidden" id={id}>
-          <option value="1">Option 2</option>
-          <option value="2">Option 3</option>
-          <option value="3">Option 4</option>
-          <option value="4">Option 5</option>
+          
+        {Employee.map((employee) => (
+          <option value={employee.matricule} className="text-body dark:text-bodydark">
+            {employee.matricule}  -  {employee.nom}  {employee.prenom }
+          </option>
+          ))}
         </select>
 
         <div className="flex flex-col items-center">

@@ -75,6 +75,7 @@ const selectB: React.FC = () => {
           <option value="" disabled className="text-body dark:text-bodydark">
             Choisir Badge
           </option>
+          
           {Badge.map((badge) => (
           <option value={badge.identifiant} className="text-body dark:text-bodydark">
             {badge.identifiant}
