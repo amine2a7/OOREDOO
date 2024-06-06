@@ -97,12 +97,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
-      <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
+      <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear" >
         {/* <!-- Sidebar Menu --> */}
         <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2" style={{ color: '#FFFFFF' }}>
               MENU
             </h3>
 
@@ -222,14 +222,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </NavLink>
                           </li>
                         </ul> */}
-                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6 text-white" >
                           <li>
                             <NavLink
                               to="/User"
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
-                              }
+                              } style={{ color: '#FFFFFF' }}
                             >
                               Liste des utilisateurs
                             </NavLink>
@@ -243,6 +243,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
                               }
+                              style={{ color: '#FFFFFF' }}
                             >
                               Liste des Visites
                             </NavLink>
@@ -256,6 +257,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
                               }
+                              style={{ color: '#FFFFFF' }}
                             >
                               Archive des Visites
                             </NavLink>

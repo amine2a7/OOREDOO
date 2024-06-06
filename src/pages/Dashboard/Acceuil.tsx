@@ -7,6 +7,8 @@ import SelectBE from '../../components/Forms/SelectGroup/selectBE';
 import SelectB from '../../components/Forms/SelectGroup/selectB';
 import MultiSelect from '../../components/Forms/MultiSelect';
 const ECommerce: React.FC = () => {
+
+ 
   return (
     <DefaultLayout>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -126,6 +128,9 @@ const ECommerce: React.FC = () => {
             <form action="#">
               <div className="p-6.5">
                 <div className="mb-4.5">
+
+             
+
                   <label className="mb-2.5 block text-black dark:text-white">
                     Matricule
                   </label>
