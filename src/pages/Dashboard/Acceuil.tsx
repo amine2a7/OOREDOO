@@ -1,12 +1,82 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Link } from 'react-router-dom';
 
 import SelectBE from '../../components/Forms/SelectGroup/selectBE';
 import SelectB from '../../components/Forms/SelectGroup/selectB';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 import MultiSelect from '../../components/Forms/MultiSelect';
 const ECommerce: React.FC = () => {
+
+  const [Employee, setEmployee] = React.useState([]);
+
+  const [formData, setFormData] = useState({
+    nom: '',
+    prenom: '',
+    tel: '',
+    cin: '',
+    employee: '',
+    badge: ''
+  });
+
+  const [selectedEmployee, setSelectedEmployee] = useState<string>('');
+  const [selectedBadge, setSelectedBadge] = useState<string>('');
+
+  // Définir les fonctions de rappel pour mettre à jour le state formData avec les valeurs sélectionnées
+const handleEmployeeSelection = (selectedValue: string) => {
+  setSelectedEmployee(selectedValue);
+  setFormData((prevData) => ({
+    ...prevData,
+    employee: selectedValue // Mettre à jour le state formData avec l'ID de l'employé sélectionné
+  }));
+};
+
+const handleBadgeSelection = (selectedValue: string) => {
+  setSelectedBadge(selectedValue);
+  setFormData((prevData) => ({
+    ...prevData,
+    badge: selectedValue // Mettre à jour le state formData avec l'ID du badge sélectionné
+  }));
+};
+    React.useEffect(() => {
+      fetch("http://localhost:5000/employee/getAllEmployees")
+        .then((res) => res.json())
+        .then((result) => {
+          setEmployee(result);
+        });
+    }, []);
+    
+
+    const handleSubmit = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/visit/addVisit", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+  
+        if (response.ok) {
+          console.log('Visit added successfully');
+        } else {
+          console.error('Error adding visit');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value
+      }));
+    };
+
   return (
     <DefaultLayout>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -53,6 +123,9 @@ const ECommerce: React.FC = () => {
                     </label>
                     <input
                       type="text"
+                      name="nom"
+                      value={formData.nom}
+                      onChange={handleInputChange}
                       placeholder="Enter le nom"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -64,6 +137,9 @@ const ECommerce: React.FC = () => {
                     </label>
                     <input
                       type="text"
+                      name="prenom"
+                      value={formData.prenom}
+                      onChange={handleInputChange}
                       placeholder="Enter le prenom"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -75,7 +151,10 @@ const ECommerce: React.FC = () => {
                     Cin <span className="text-meta-1">*</span>
                   </label>
                   <input
-                    type="texte"
+                    type="text"
+                    name="cin"
+                    value={formData.cin}
+                    onChange={handleInputChange}
                     placeholder="Enter le numero cin"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -87,13 +166,20 @@ const ECommerce: React.FC = () => {
                   </label>
                   <input
                     type="text"
+                    name="tel"
+                    value={formData.tel}
+                    onChange={handleInputChange}
                     placeholder="Entre le tel"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
                 
-                <MultiSelect id="multiSelect" />
-             <SelectB/>
+               <MultiSelect id="multiSelect" onChange={handleEmployeeSelection}/> 
+                
+  
+          
+                
+             <SelectB onChange={handleBadgeSelection}/>
              
                 
 
@@ -104,7 +190,7 @@ const ECommerce: React.FC = () => {
                   Anuller
                 </button>
                 <br></br>
-                <button style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
+                <button onClick={handleSubmit} style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                   Valide
                 </button>
               </div>
@@ -175,3 +261,6 @@ const ECommerce: React.FC = () => {
 };
 
 export default ECommerce;
+
+
+
