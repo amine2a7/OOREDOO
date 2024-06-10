@@ -5,7 +5,7 @@ const TableOne = () => {
   const [employees, setEmployees] = useState({});
   const [visitors, setVisitors] = useState({});
   const [badges, setBadges] = useState({});
- 
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
