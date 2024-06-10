@@ -3,43 +3,18 @@ import React from 'react';
 import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Package } from '../../types/package';
-import TableTwo from '../../components/Tables/TableTwo';
 
-const packageData: Package[] = [
-  {
-    name: 'Yassine',
-    price: 'ferchichi',
-    invoiceDate: `Jan 13,2023`,
-    status: 'activé',
-  },
-  {
-    name: 'Amine',
-    price: 'Khadhraoui',
-    invoiceDate: `Jan 13,2023`,
-    status: 'désactivé',
-  },
-  {
-    name: 'Business Package',
-    price: 'ferchichi',
-    invoiceDate: `Jan 13,2023`,
-    status: 'activé',
-  },
-  {
-    name: 'Amine',
-    price: 'Khadhraoui',
-    invoiceDate: `Jan 13,2023`,
-    status: 'désactivé',
-  },
-];  
+
 const ListeVisite: React.FC = () => {
   return (
     <DefaultLayout>
         <br></br>
-                <button style={{ backgroundColor: '#FE5551' }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
+                <button style={{ backgroundColor: '#FF0000' ,width:600 ,height:40,alignItems:'center' }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
                  
                   Liste Des Visites
                 </button>
-      <TableTwo />
+                <br></br>
+      <TableOne />
 
 
 
