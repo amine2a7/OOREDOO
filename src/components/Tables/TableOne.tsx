@@ -1,34 +1,57 @@
-import { Package } from '../../types/package';
-
-
-const packageData: Package[] = [
-  {
-    name: 'Yassine',
-    price: 'ferchichi',
-    invoiceDate: `Jan 13,2023`,
-    status: 'activé',
-  },
-  {
-    name: 'Amine',
-    price: 'Khadhraoui',
-    invoiceDate: `Jan 13,2023`,
-    status: 'désactivé',
-  },
-  {
-    name: 'Business Package',
-    price: 'ferchichi',
-    invoiceDate: `Jan 13,2023`,
-    status: 'activé',
-  },
-  {
-    name: 'Amine',
-    price: 'Khadhraoui',
-    invoiceDate: `Jan 13,2023`,
-    status: 'désactivé',
-  },
-];
+import React, { useEffect, useState } from 'react';
 
 const TableOne = () => {
+  const [visits, setVisits] = useState([]);
+  const [employees, setEmployees] = useState({});
+  const [visitors, setVisitors] = useState({});
+  const [badges, setBadges] = useState({});
+ 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const visitResponse = await fetch("http://localhost:5000/visit/getAllVisitsArchive");
+        const visitResult = await visitResponse.json();
+        setVisits(visitResult);
+
+        const employeeIds = [...new Set(visitResult.map(item => item.employee))];
+        const visitorIds = [...new Set(visitResult.map(item => item.visitor))];
+        const badgeIds = [...new Set(visitResult.map(item => item.badge))];
+
+        const employeeData = {};
+        const visitorData = {};
+        const badgeData = {};
+
+        await Promise.all([
+          ...employeeIds.map(async id => {
+            const res = await fetch(`http://localhost:5000/employee/getEmployeeById/${id}`);
+            const data = await res.json();
+            employeeData[id] = data;
+          }),
+          ...visitorIds.map(async id => {
+            const res = await fetch(`http://localhost:5000/visitor/getVisitorById/${id}`);
+            const data = await res.json();
+            visitorData[id] = data;
+          }),
+          ...badgeIds.map(async id => {
+            const res = await fetch(`http://localhost:5000/badge/getBadgeById/${id}`);
+            const data = await res.json();
+            badgeData[id] = data;
+          })
+        ]);
+
+        setEmployees(employeeData);
+        setVisitors(visitorData);
+        setBadges(badgeData);
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -39,16 +62,19 @@ const TableOne = () => {
                 Nom et Prenom
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-               N° Badge
+                N° Badge
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-               Numero Tel
+                Numero Tel
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-               Personnel
+                Personnel
               </th>
               <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                Date
+                Check-in
+              </th>
+              <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                Check-out
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Status
@@ -59,53 +85,53 @@ const TableOne = () => {
             </tr>
           </thead>
           <tbody>
-            {packageData.map((packageItem, key) => (
-              <tr key={key}>
+            {visits.map((visit) => (
+              <tr key={visit._id}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {packageItem.name}
+                    {visitors[visit.visitor]?.Visitor?.nom} {visitors[visit.visitor]?.Visitor?.prenom}
                   </h5>
-                  <p className="text-sm">{packageItem.price}</p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    126
+                    {badges[visit.badge]?.Badge?.identifiant}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    22161600  
+                    {visitors[visit.visitor]?.Visitor?.tel}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    Amine  
+                    {employees[visit.employee]?.Employee?.nom} {employees[visit.employee]?.Employee?.prenom}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    <span className="text-sm"> check in:</span> {packageItem.invoiceDate}
+                    {new Date(visit.checkin).toLocaleString()}
                   </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                  <span className="text-sm"> check out:</span> {packageItem.invoiceDate}
+                    {new Date(visit.checkout).toLocaleString()}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p
                     className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                      packageItem.status === 'activé'
+                      visit.vtype === 'activé'
                         ? 'bg-success text-success'
-                        : packageItem.status === 'désactivé'
+                        : visit.vtype === 'désactivé'
                         ? 'bg-danger text-danger'
                         : 'bg-warning text-warning'
                     }`}
                   >
-                    {packageItem.status}
+                    {visit.vtype}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                    
                     <button className="hover:text-primary">
                       <svg
                         className="fill-current"
@@ -115,14 +141,8 @@ const TableOne = () => {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <path
-                          d="M16.8754 11.6719C16.5379 11.6719 16.2285 11.9531 16.2285 12.3187V14.8219C16.2285 15.075 16.0316 15.2719 15.7785 15.2719H2.22227C1.96914 15.2719 1.77227 15.075 1.77227 14.8219V12.3187C1.77227 11.9812 1.49102 11.6719 1.12539 11.6719C0.759766 11.6719 0.478516 11.9531 0.478516 12.3187V14.8219C0.478516 15.7781 1.23789 16.5375 2.19414 16.5375H15.7785C16.7348 16.5375 17.4941 15.7781 17.4941 14.8219V12.3187C17.5223 11.9531 17.2129 11.6719 16.8754 11.6719Z"
-                          fill=""
-                        />
-                        <path
-                          d="M8.55074 12.3469C8.66324 12.4594 8.83199 12.5156 9.00074 12.5156C9.16949 12.5156 9.31012 12.4594 9.45074 12.3469L13.4726 8.43752C13.7257 8.1844 13.7257 7.79065 13.5007 7.53752C13.2476 7.2844 12.8539 7.2844 12.6007 7.5094L9.64762 10.4063V2.1094C9.64762 1.7719 9.36637 1.46252 9.00074 1.46252C8.66324 1.46252 8.35387 1.74377 8.35387 2.1094V10.4063L5.40074 7.53752C5.14762 7.2844 4.75387 7.31252 4.50074 7.53752C4.24762 7.79065 4.27574 8.1844 4.50074 8.43752L8.55074 12.3469Z"
-                          fill=""
-                        />
+                        <path d="" fill="" />
+                        <path d="" fill="" />
                       </svg>
                     </button>
                   </div>
@@ -135,4 +155,5 @@ const TableOne = () => {
     </div>
   );
 };
+
 export default TableOne;
