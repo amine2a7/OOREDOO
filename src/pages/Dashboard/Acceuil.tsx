@@ -69,6 +69,26 @@ const handleBadgeSelection = (selectedValue: string) => {
       }
     };
 
+    const handleSubmitE = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/visit/addBadgeE", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+  
+        if (response.ok) {
+          console.log('Visit added successfully');
+        } else {
+          console.error('Error adding visit');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    };
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setFormData((prevData) => ({
@@ -218,11 +238,7 @@ const handleBadgeSelection = (selectedValue: string) => {
                   <label className="mb-2.5 block text-black dark:text-white">
                     Matricule
                   </label>
-                  <input
-                    type="text"
-                    placeholder="Enter your full name"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
+                  <MultiSelect id="multiSelect" onChange={handleEmployeeSelection}/> 
                 </div>
 
                 
@@ -239,14 +255,16 @@ const handleBadgeSelection = (selectedValue: string) => {
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div> */}
-<SelectBE/>
+
+                
+            <SelectBE onChange={handleBadgeSelection}/>
                 <br></br>
                 <button style={{ backgroundColor: '#FE5551' ,width:400 ,height:40}} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
                  
                   Anuller
                 </button>
                 <br></br>
-                <button style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
+                <button onClick={handleSubmitE} style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                   Valide
                 </button>
               </div>
