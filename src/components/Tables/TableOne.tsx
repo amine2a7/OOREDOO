@@ -100,7 +100,7 @@ const TableOne = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {visitors[visit.visitor]?.Visitor?.tel || employees[visit.employee]?.Employee?.tel}
+                    {visitors[visit.visitor]?.Visitor?.tel}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
