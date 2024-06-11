@@ -90,7 +90,7 @@ const TableOne = () => {
               <tr key={visit._id}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {visitors[visit.visitor]?.Visitor?.nom} {visitors[visit.visitor]?.Visitor?.prenom}
+                    {visitors[visit.visitor]?.Visitor?.nom || '------'} {visitors[visit.visitor]?.Visitor?.prenom}
                   </h5>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -100,7 +100,7 @@ const TableOne = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {visitors[visit.visitor]?.Visitor?.tel}
+                    {visitors[visit.visitor]?.Visitor?.tel || '------'}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
