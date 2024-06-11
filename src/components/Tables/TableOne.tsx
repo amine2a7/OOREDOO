@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// import CheckCircleIcon from 'CheckCircle';
 
 const TableOne = () => {
   const [visits, setVisits] = useState([]);
@@ -10,7 +11,7 @@ const TableOne = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const visitResponse = await fetch("http://localhost:5000/visit/getAllVisitsArchive");
+        const visitResponse = await fetch("http://localhost:5000/visit/getAllVisitsDaily");
         const visitResult = await visitResponse.json();
         setVisits(visitResult);
 
@@ -120,9 +121,9 @@ const TableOne = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p
                     className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                      visit.vtype === 'activé'
-                        ? 'bg-success text-success'
-                        : visit.vtype === 'désactivé'
+                      visit.vtype === 'active'
+                        ? 'bg-success text-success ' 
+                        : visit.vtype === 'desactive'
                         ? 'bg-danger text-danger'
                         : 'bg-warning text-warning'
                     }`}
@@ -132,19 +133,7 @@ const TableOne = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                    <button className="hover:text-primary">
-                      <svg
-                        className="fill-current"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="" fill="" />
-                        <path d="" fill="" />
-                      </svg>
-                    </button>
+                  {/* <CheckCircleIcon style={{ backgroundColor: '#FF0000' }}/> */}
                   </div>
                 </td>
               </tr>
