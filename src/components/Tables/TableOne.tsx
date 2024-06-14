@@ -7,11 +7,26 @@ const TableOne = () => {
   const [visitors, setVisitors] = useState({});
   const [badges, setBadges] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
+  const [badgeUpdated, setBadgeUpdated] = useState(false);
 
   useEffect(() => {
+    const token = '';
+    let url = '';
+  
+    if (token === 'b') {
+      url = "http://localhost:5000/visit/getAllVisitsDailyzenith1";
+    } else if (token === 'a') {
+      url = "http://localhost:5000/visit/getAllVisitsDailyzenith2";
+    } else if (token === 'd') {
+      url = "http://localhost:5000/visit/getAllVisitsDailycharguia";
+    } else if (token === 'c') {
+      url = "http://localhost:5000/visit/getAllVisitsDailysfax";
+    } else {
+      url = "http://localhost:5000/visit/getAllVisitsDaily";
+    }
     const fetchData = async () => {
       try {
-        const visitResponse = await fetch("http://localhost:5000/visit/getAllVisitsDaily");
+        const visitResponse = await fetch(url);
         const visitResult = await visitResponse.json();
         setVisits(visitResult);
 
@@ -51,8 +66,32 @@ const TableOne = () => {
     };
 
     fetchData();
-  }, []);
+  }, [badgeUpdated]);
+  const handleBadgeUpdate = async (badgeId,VisitId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/badge/updateBadgeDispo/${badgeId}/${VisitId}`, {
+        method: 'PUT'
+      });
 
+      if (response.ok) {
+        console.log('Badge updated successfully');
+      } else {
+        console.error('Error updating badge');
+      }
+    } catch (error) {
+      console.error('Error updating badge:', error);
+    }
+    window.location.reload();
+  };
+
+  
+  const sortedVisits = [...visits].sort((a, b) => {
+    if (a.vtype === 'active' && b.vtype !== 'active') return -1;
+    if (a.vtype !== 'active' && b.vtype === 'active') return 1;
+    return 0;
+  });
+
+  
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -86,7 +125,7 @@ const TableOne = () => {
             </tr>
           </thead>
           <tbody>
-            {visits.map((visit) => (
+            {sortedVisits.map((visit) => (
               <tr key={visit._id}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
@@ -119,21 +158,24 @@ const TableOne = () => {
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p
+                <p
                     className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                      visit.vtype === 'active'
-                        ? 'bg-success text-success ' 
-                        : visit.vtype === 'desactive'
-                        ? 'bg-danger text-danger'
+                      visit.vtype === 'active' 
+                        ? 'bg-success text-success'
+                        : visit.vtype === 'desactive' 
+                        ? ' bg-danger text-danger'
                         : 'bg-warning text-warning'
                     }`}
                   >
-                    {visit.vtype}
+                     {visit.vtype === 'active' ? 'active' : 'Terminee'}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                  {/* <CheckCircleIcon style={{ backgroundColor: '#FF0000' }}/> */}
+                  <button style={{ backgroundColor: '#FF0000' ,width:60 ,height:20, display: 'flex', alignItems: 'center',justifyContent: 'center'}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90" onClick={() => handleBadgeUpdate(visit.badge,visit._id)} >
+                      
+                  Termine
+                    </button>
                   </div>
                 </td>
               </tr>
