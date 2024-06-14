@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import Axios for making HTTP requests
 import Logo from '../../images/logo/logo3.png';
 import phone from '../../images/logo/phone.png';
 import perso from '../../images/logo/perso.png';
-import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
+import * as Yup from 'yup';
 
 const SignIn: React.FC = () => {
   const styles = {
@@ -19,9 +20,54 @@ const SignIn: React.FC = () => {
       marginLeft: '1px',
     }
   };
+
+  const navigate = useNavigate();
+
+  const initialValues = {
+    username: '',
+    password: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required('Username is required'),
+    password: Yup.string().required('Password is required'),
+  });
+
+  const handleLogin = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    
+    // Get form values from event.target.elements
+    
+    const values = {
+      username: event.target.elements.username.value,
+      password: event.target.elements.password.value,
+    };
+  
+    const { setSubmitting, setErrors } = event.target.elements;
+  
+    try {
+      const response = await axios.post('http://localhost:5000/api/login', values);
+      const { token } = response.data;
+      
+      localStorage.setItem('token', token);
+      alert('Login successful !');
+      navigate('/acceuil');
+      
+    } catch (error) {
+      if (error.response) {
+        alert('Invalid username or password');
+        setErrors({ password: 'Invalid username or password' });
+      } else {
+        alert('Invalid username or password');
+        console.error('Error:', error.message);
+      }
+    }
+    setSubmitting(false);
+  };
+  
+
   return (
     <div>
-
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
@@ -29,9 +75,6 @@ const SignIn: React.FC = () => {
               <Link className="mb-5.5 inline-block" to="/">
                 <img className="dark:hidden" src={Logo} alt="Logo" width={400} height={400}/>
               </Link>
-
-              
-
               <div style={styles.imageContainer}>
                 <img src={phone} alt="phone"/>
                 <img src={perso} alt="perso" style={styles.persoImg}/>
@@ -45,18 +88,18 @@ const SignIn: React.FC = () => {
                 Sign In to ooredoo
               </h2>
 
-              <form>
+              <form onSubmit={handleLogin}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Email
+                    Username
                   </label>
                   <div className="relative">
                     <input
-                      type="email"
-                      placeholder="Enter your email"
+                      type="text"
+                      name="username" // Add name attribute
+                      placeholder="Enter your Username"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
-
                     <span className="absolute right-4 top-4">
                       <svg
                         className="fill-current"
@@ -79,15 +122,15 @@ const SignIn: React.FC = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Re-type Password
+                   Password
                   </label>
                   <div className="relative">
                     <input
                       type="password"
-                      placeholder="6+ Characters, 1 Capital letter"
+                      name="password" // Add name attribute
+                      placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
-
                     <span className="absolute right-4 top-4">
                       <svg
                         className="fill-current"
@@ -111,7 +154,6 @@ const SignIn: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <SelectGroupTwo/>
                 <br></br>
                 <div className="mb-5">
                   <input
