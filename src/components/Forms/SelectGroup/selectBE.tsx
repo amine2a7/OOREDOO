@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState ,useEffect} from 'react';
+import axios from 'axios';
 interface Badge {
   _id: string;
   identifiant: string;
@@ -14,17 +14,64 @@ const selectBE: React.FC<SelectBProps>  = ({ onChange }) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [badges, setBadges] = useState<Badge[]>([]);
 
+ 
+  const [userData, setUserData] = useState(() => {
+    const storedUserData = JSON.parse(localStorage.getItem('userData') || '{}');
+    return storedUserData;
+  });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get('http://localhost:5000/api/userToken', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
+  const token = userData.batiment;
+  useEffect(() => {
+    let url = '';
+    
+    if (token === 'zenith1') {
+      url = "http://localhost:5000/badge/unavailable-employeeZ1";
+    } else if (token === 'zenith2') {
+      url = "http://localhost:5000/badge/unavailable-employeeZ2";
+    } else if (token === 'charguia') {
+      url = "http://localhost:5000/badge/unavailable-employeecharguia";
+    } else if (token === 'sfax') {
+      url = "http://localhost:5000/badge/unavailable-employeesfax";
+    } else {
+      url = "http://localhost:5000/badge/getAllBadges";
+    }
 
-  React.useEffect(() => {
-    fetch("http://localhost:5000/badge/unavailable-employeeZ1")
+    fetch(url)
       .then((res) => res.json())
       .then((result) => {
         setBadges(result);
       });
-  }, []);
+  });
+  /////////////////////////////////////////////
+  // React.useEffect(() => {
+  //   fetch("http://localhost:5000/badge/unavailable-employeeZ1")
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       setBadges(result);
+  //     });
+  // }, []);
   return (
     <div className="mb-4.5">
       <label className="mb-2.5 block text-black dark:text-white">
@@ -46,7 +93,7 @@ const selectBE: React.FC<SelectBProps>  = ({ onChange }) => {
           }`}
         >
           <option value="" disabled className="text-body dark:text-bodydark">
-            Choisir Badge
+          Choisir Badge du batiment {userData.batiment}
           </option>
           
           {badges.map((badge) => (

@@ -1,6 +1,6 @@
 // Composant SelectB
 import React, { useState, useEffect } from 'react';
-
+import axios from 'axios';
 interface Badge {
   _id: string;
   identifiant: string;
@@ -14,22 +14,45 @@ const SelectB: React.FC<SelectBProps> = ({ onChange }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [badges, setBadges] = useState<Badge[]>([]);
-  const token = "c";
+ 
+  const [userData, setUserData] = useState(() => {
+    const storedUserData = JSON.parse(localStorage.getItem('userData') || '{}');
+    return storedUserData;
+  });
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get('http://localhost:5000/api/userToken', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
-
+  const token = userData.batiment;
   useEffect(() => {
     let url = '';
-
-    if (token === 'b') {
+    
+    if (token === 'zenith1') {
       url = "http://localhost:5000/badge/unavailable-visitorsZ1";
-    } else if (token === 'a') {
+    } else if (token === 'zenith2') {
       url = "http://localhost:5000/badge/unavailable-visitorsZ2";
-    } else if (token === 'd') {
+    } else if (token === 'charguia') {
       url = "http://localhost:5000/badge/unavailable-visitorscharguia";
-    } else if (token === 'c') {
+    } else if (token === 'sfax') {
       url = "http://localhost:5000/badge/unavailable-visitorssfax";
     } else {
       url = "http://localhost:5000/badge/getAllBadges";
@@ -40,7 +63,7 @@ const SelectB: React.FC<SelectBProps> = ({ onChange }) => {
       .then((result) => {
         setBadges(result);
       });
-  }, [token]); // Ajoutez token comme dépendance pour effectuer le fetch en cas de changement de token
+  }); // Ajoutez token comme dépendance pour effectuer le fetch en cas de changement de token
 
   return (
     <div className="mb-4.5">
@@ -63,7 +86,7 @@ const SelectB: React.FC<SelectBProps> = ({ onChange }) => {
           }`}
         >
           <option value="" disabled className="text-body dark:text-bodydark">
-            Choisir Badge
+            Choisir Badge du batiment {userData.batiment}
           </option>
           
           {badges.map((badge) => (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import CheckCircleIcon from 'CheckCircle';
-
+import axios from 'axios';
+import { easing } from '@mui/material';
 const TableOne = () => {
   const [visits, setVisits] = useState([]);
   const [employees, setEmployees] = useState({});
@@ -8,25 +9,55 @@ const TableOne = () => {
   const [badges, setBadges] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [badgeUpdated, setBadgeUpdated] = useState(false);
+  const [userData, setUserData] = useState(() => {
+    const storedUserData = JSON.parse(localStorage.getItem('userData') || '{}');
+    return storedUserData;
+  });
 
   useEffect(() => {
-    const token = '';
-    let url = '';
-  
-    if (token === 'b') {
-      url = "http://localhost:5000/visit/getAllVisitsDailyzenith1";
-    } else if (token === 'a') {
-      url = "http://localhost:5000/visit/getAllVisitsDailyzenith2";
-    } else if (token === 'd') {
-      url = "http://localhost:5000/visit/getAllVisitsDailycharguia";
-    } else if (token === 'c') {
-      url = "http://localhost:5000/visit/getAllVisitsDailysfax";
-    } else {
-      url = "http://localhost:5000/visit/getAllVisitsDaily";
-    }
-    const fetchData = async () => {
+    const fetchUserData = async () => {
       try {
-        const visitResponse = await fetch(url);
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get('http://localhost:5000/api/userToken', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
+    };
+
+    fetchUserData(); 
+    
+  }, []);
+
+  useEffect(() => { 
+    let e = userData.batiment;
+    console.log(e)
+    let url = '';
+       if     (e === 'zenith1') {
+        console.log("zenithh111111111111")
+      url = "http://localhost:5000/visit/getAllVisitsDailyzenith1";
+    } else if (e === 'zenith2') {
+      console.log("22222222222222")
+      url = "http://localhost:5000/visit/getAllVisitsDailyzenith2";
+    } else if (e === 'charguia') {
+      console.log("charrrrrrrrrr")
+      url = "http://localhost:5000/visit/getAllVisitsDailycharguia";
+    } else if (e === 'sfax') {
+      console.log("sssssssss") 
+      url = "http://localhost:5000/visit/getAllVisitsDailysfax"; 
+    }
+   
+    const fetchData = async () => {
+      
+      try {
+        
+        const visitResponse = await fetch(e);
         const visitResult = await visitResponse.json();
         setVisits(visitResult);
 
@@ -34,7 +65,7 @@ const TableOne = () => {
         const visitorIds = [...new Set(visitResult.map(item => item.visitor))];
         const badgeIds = [...new Set(visitResult.map(item => item.badge))];
 
-        const employeeData = {};
+        const employeeData = {}; 
         const visitorData = {};
         const badgeData = {};
 
