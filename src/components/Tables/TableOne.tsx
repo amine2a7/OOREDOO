@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-// import CheckCircleIcon from 'CheckCircle';
 import axios from 'axios';
-import { easing } from '@mui/material';
+
 const TableOne = () => {
   const [visits, setVisits] = useState([]);
   const [employees, setEmployees] = useState({});
@@ -15,90 +14,92 @@ const TableOne = () => {
   });
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (token) {
+    const fetchUserData = async () => { 
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
           const response = await axios.get('http://localhost:5000/api/userToken', {
             headers: {
               Authorization: `Bearer ${token}`,
-            },
+            }
           });
           setUserData(response.data);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
         }
-      } catch (error) {
-        console.error('Error fetching user data:', error.message);
       }
     };
 
     fetchUserData(); 
-    
   }, []);
 
   useEffect(() => { 
-    let e = userData.batiment;
-    console.log(e)
-    let url = '';
-       if     (e === 'zenith1') {
-        console.log("zenithh111111111111")
-      url = "http://localhost:5000/visit/getAllVisitsDailyzenith1";
-    } else if (e === 'zenith2') {
-      console.log("22222222222222")
-      url = "http://localhost:5000/visit/getAllVisitsDailyzenith2";
-    } else if (e === 'charguia') {
-      console.log("charrrrrrrrrr")
-      url = "http://localhost:5000/visit/getAllVisitsDailycharguia";
-    } else if (e === 'sfax') {
-      console.log("sssssssss") 
-      url = "http://localhost:5000/visit/getAllVisitsDailysfax"; 
-    }
-   
-    const fetchData = async () => {
-      
-      try {
-        
-        const visitResponse = await fetch(e);
-        const visitResult = await visitResponse.json();
-        setVisits(visitResult);
-
-        const employeeIds = [...new Set(visitResult.map(item => item.employee))];
-        const visitorIds = [...new Set(visitResult.map(item => item.visitor))];
-        const badgeIds = [...new Set(visitResult.map(item => item.badge))];
-
-        const employeeData = {}; 
-        const visitorData = {};
-        const badgeData = {};
-
-        await Promise.all([
-          ...employeeIds.map(async id => {
-            const res = await fetch(`http://localhost:5000/employee/getEmployeeById/${id}`);
-            const data = await res.json();
-            employeeData[id] = data;
-          }),
-          ...visitorIds.map(async id => {
-            const res = await fetch(`http://localhost:5000/visitor/getVisitorById/${id}`);
-            const data = await res.json();
-            visitorData[id] = data;
-          }),
-          ...badgeIds.map(async id => {
-            const res = await fetch(`http://localhost:5000/badge/getBadgeById/${id}`);
-            const data = await res.json();
-            badgeData[id] = data;
-          })
-        ]);
-
-        setEmployees(employeeData);
-        setVisitors(visitorData);
-        setBadges(badgeData);
-
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    if (userData.batiment) {
+      let url = '';
+      switch (userData.batiment) {
+        case 'zenith1':
+          url = "http://localhost:5000/visit/getAllVisitsDailyzenith1";
+          break;
+        case 'zenith2':
+          url = "http://localhost:5000/visit/getAllVisitsDailyzenith2";
+          break;
+        case 'charguia':
+          url = "http://localhost:5000/visit/getAllVisitsDailycharguia";
+          break;
+        case 'sfax':
+          url = "http://localhost:5000/visit/getAllVisitsDailysfax";
+          break;
+        default:
+          console.error("Unknown building");
+          return;
       }
-    };
 
-    fetchData();
-  }, [badgeUpdated]);
-  const handleBadgeUpdate = async (badgeId,VisitId) => {
+      const fetchData = async () => {
+        try {
+          const visitResponse = await fetch(url);
+          const visitResult = await visitResponse.json();
+          setVisits(visitResult);
+          
+          const employeeIds = [...new Set(visitResult.map(item => item.employee))];
+          const visitorIds = [...new Set(visitResult.map(item => item.visitor))];
+          const badgeIds = [...new Set(visitResult.map(item => item.badge))];
+      
+          const employeeData = {}; 
+          const visitorData = {};
+          const badgeData = {};
+
+          await Promise.all([
+            ...employeeIds.map(async id => {
+              const res = await fetch(`http://localhost:5000/employee/getEmployeeById/${id}`);
+              const data = await res.json();
+              employeeData[id] = data;
+            }),
+            ...visitorIds.map(async id => {
+              const res = await fetch(`http://localhost:5000/visitor/getVisitorById/${id}`);
+              const data = await res.json();
+              visitorData[id] = data;
+            }),
+            ...badgeIds.map(async id => {
+              const res = await fetch(`http://localhost:5000/badge/getBadgeById/${id}`);
+              const data = await res.json();
+              badgeData[id] = data;
+            }) 
+          ]);
+
+          setEmployees(employeeData);
+          setVisitors(visitorData);
+          setBadges(badgeData);
+
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
+    }
+  }, [userData.batiment, badgeUpdated]);
+
+  const handleBadgeUpdate = async (badgeId, VisitId) => {
     try {
       const response = await fetch(`http://localhost:5000/badge/updateBadgeDispo/${badgeId}/${VisitId}`, {
         method: 'PUT'
@@ -115,14 +116,12 @@ const TableOne = () => {
     window.location.reload();
   };
 
-  
   const sortedVisits = [...visits].sort((a, b) => {
     if (a.vtype === 'active' && b.vtype !== 'active') return -1;
     if (a.vtype !== 'active' && b.vtype === 'active') return 1;
     return 0;
   });
 
-  
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -170,7 +169,7 @@ const TableOne = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {visitors[visit.visitor]?.Visitor?.tel|| employees[visit.employee]?.Employee?.tel}
+                    {visitors[visit.visitor]?.Visitor?.tel || employees[visit.employee]?.Employee?.tel}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -189,7 +188,7 @@ const TableOne = () => {
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <p
+                  <p
                     className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
                       visit.vtype === 'active' 
                         ? 'bg-success text-success'
@@ -203,9 +202,12 @@ const TableOne = () => {
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                  <button style={{ backgroundColor: '#FF0000' ,width:60 ,height:20, display: 'flex', alignItems: 'center',justifyContent: 'center'}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90" onClick={() => handleBadgeUpdate(visit.badge,visit._id)} >
-                      
-                  Termine
+                    <button 
+                      style={{ backgroundColor: '#FF0000', width: 60, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90" 
+                      onClick={() => handleBadgeUpdate(visit.badge, visit._id)} 
+                    >
+                      Termine
                     </button>
                   </div>
                 </td>
