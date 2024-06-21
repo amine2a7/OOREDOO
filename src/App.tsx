@@ -19,6 +19,8 @@ import Acceuil from'./pages/Dashboard/Acceuil';
 import Archive from './pages/Dashboard/Archive';
 import ListeVisite from './pages/Dashboard/ListeVisite';
 import UserListe from './pages/Dashboard/UserListe';
+import Otp from './pages/Authentication/Otp';
+import Reset from './pages/Authentication/Reset';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -150,6 +152,24 @@ function App() {
             <>
               <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <SignUp />
+            </>
+          }
+        />
+        <Route
+          path="/auth/otp"
+          element={
+            <>
+              <PageTitle title="Otp" />
+              <Otp />
+            </>
+          }
+        />
+        <Route
+          path="/auth/reset"
+          element={
+            <>
+              <PageTitle title="Reset" />
+              <Reset />
             </>
           }
         />
