@@ -6,8 +6,12 @@ import phone from '../../images/logo/phone.png';
 import perso from '../../images/logo/perso.png';
 import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
 
+
+
+
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
+
   const [uploadedFile, setUploadedFile] = useState('');
   const [errors, setErrors] = useState({});
 
@@ -61,12 +65,13 @@ const SignUp: React.FC = () => {
     const fields = Object.fromEntries(formData.entries());
     const validationErrors = validate(fields);
     setErrors(validationErrors);
-
+  
     if (Object.keys(validationErrors).length === 0) {
       try {
         const { firstName, lastName, userName, email, password, batiment } = fields;
-
-        await axios.post('http://localhost:5000/api/register', {
+  
+        // Enregistrer l'utilisateur
+        const registrationResponse = await axios.post('http://localhost:5000/api/register', {
           username: userName,
           password,
           firstName,
@@ -76,15 +81,42 @@ const SignUp: React.FC = () => {
           batiment,
           role: 'hotesse',
         });
-
-        alert('Registration successful!');
-        navigate('/auth/signin');
+  
+        // Handle the registration response
+        if (registrationResponse.status === 201) {
+          const userId = registrationResponse.data.id;
+          console.log('User registered successfully:', userId);
+  
+          // Générez l'OTP - Modifier la méthode de POST à GET
+          const otpResponse = await axios.get('http://localhost:5000/api/generateOTP', {
+            params: { email }, // Passer les paramètres dans la requête GET
+          });
+          const code = otpResponse.data.code; // Récupérer le code OTP
+  
+          // Envoyez l'OTP par email
+          await axios.post('http://localhost:5000/api/sendOTP', {
+            userEmail: email,
+            username: userName,
+            firstName: firstName,
+            lastName: lastName,
+            password: password,
+            otp: code,
+          });
+  
+          // Afficher un message de succès
+          alert('Registration successful! An OTP has been sent to your email.');
+          navigate('/auth/signin');
+        } else {
+          throw new Error('Registration failed');
+        }
       } catch (error) {
         console.error('Registration failed:', error);
         alert('Registration failed. Please try again.');
       }
     }
   };
+  
+  
 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -99,6 +131,8 @@ const SignUp: React.FC = () => {
     const base64 = await convertToBase64(e.target.files[0]);
     setUploadedFile(base64);
   };
+
+  
 
   return (
     <div>
@@ -172,6 +206,7 @@ const SignUp: React.FC = () => {
                       type="email"
                       name="email"
                       placeholder="Enter your email"
+                      
                       className={`w-full rounded-lg border ${errors.email ? 'border-red-500' : 'border-stroke'} bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
                       />
                       {errors.email && <p className="text-red-500">{errors.email}</p>}
@@ -226,6 +261,7 @@ const SignUp: React.FC = () => {
                     value="Create account"
                     className="w-full cursor-pointer rounded-lg border p-4 text-white transition hover:bg-opacity-90"
                     style={{ background: '#FF0000' }}
+                   
                   />
                 </div>
                 <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
