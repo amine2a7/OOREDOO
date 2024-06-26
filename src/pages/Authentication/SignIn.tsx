@@ -35,9 +35,8 @@ const SignIn: React.FC = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault(); // Prevent default form submission
-    
+  
     // Get form values from event.target.elements
-    
     const values = {
       username: event.target.elements.username.value,
       password: event.target.elements.password.value,
@@ -47,12 +46,16 @@ const SignIn: React.FC = () => {
   
     try {
       const response = await axios.post('http://localhost:5000/api/login', values);
-      const { token } = response.data;
-      
-      localStorage.setItem('token', token);
-      alert('Login successful !');
-      navigate('/acceuil');
-      
+  
+      if (response.data.otpRequired) {
+        navigate('/auth/otp', { state: { username: values.username } });
+      } else {
+        const { token } = response.data;
+        localStorage.setItem('token', token);
+        alert('Login successful!');
+        navigate('/acceuil');
+      }
+  
     } catch (error) {
       if (error.response) {
         alert('Invalid username or password');
@@ -64,6 +67,7 @@ const SignIn: React.FC = () => {
     }
     setSubmitting(false);
   };
+  
   
 
   return (

@@ -14,6 +14,8 @@ const SignUp: React.FC = () => {
 
   const [uploadedFile, setUploadedFile] = useState('');
   const [errors, setErrors] = useState({});
+  const [selectedOption, setSelectedOption] = useState<string>('');
+
 
   const styles = {
     imageContainer: {
@@ -68,7 +70,7 @@ const SignUp: React.FC = () => {
   
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const { firstName, lastName, userName, email, password, batiment } = fields;
+        const { firstName, lastName, userName, email, password } = fields;
   
         // Enregistrer l'utilisateur
         const registrationResponse = await axios.post('http://localhost:5000/api/register', {
@@ -78,7 +80,7 @@ const SignUp: React.FC = () => {
           lastName,
           profilpicture: uploadedFile,
           email,
-          batiment,
+          batiment: selectedOption, // Add the selected building value
           role: 'hotesse',
         });
   
@@ -253,7 +255,7 @@ const SignUp: React.FC = () => {
                     />
                   </div>
                 </div>
-                <SelectGroupTwo />
+                <SelectGroupTwo selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
                 <br />
                 <div className="mb-5">
                   <input
