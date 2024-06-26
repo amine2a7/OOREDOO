@@ -12,6 +12,9 @@ const TableTwo = () => {
   const [badgeUpdated, setBadgeUpdated] = useState(false); // État ponpm fundur suivre si le badge a été mis à jour
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+    // State for statistics
+    const [buildingStats, setBuildingStats] = useState({});
+    const [employeeStats, setEmployeeStats] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +52,7 @@ const TableTwo = () => {
         setEmployees(employeeData);
         setVisitors(visitorData);
         setBadges(badgeData);
-
+        calculateStatistics(visitResult, badgeData, employeeData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -70,6 +73,7 @@ const TableTwo = () => {
       if (response.ok) {
         console.log('Badge updated successfully');
         setBadgeUpdated(!badgeUpdated); // Inverser l'état pour forcer le rechargement des données
+        
       } else {
         console.error('Error updating badge');
       }
@@ -96,6 +100,51 @@ const TableTwo = () => {
       'Batiment': badges[visit.badge]?.Badge?.batiment,
     };
   });
+/////////////////////////
+const calculateStatistics = (visits, badgeData, employeeData) => {
+  const buildingStats = {};
+  const employeeStats = {};
+
+  visits.forEach(visit => {
+    const badge = badgeData[visit.badge]?.Badge;
+    const employee = employeeData[visit.employee]?.Employee;
+
+    if (badge) {
+      const building = badge.batiment;
+      const date = new Date(visit.checkin);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+
+      if (!buildingStats[building]) {
+        buildingStats[building] = {};
+      }
+
+      if (!buildingStats[building][year]) {
+        buildingStats[building][year] = {};
+      }
+
+      if (!buildingStats[building][year][month]) {
+        buildingStats[building][year][month] = 0;
+      }
+
+      buildingStats[building][year][month] += 1;
+    }
+
+    if (employee) {
+      const direction = employee.direction;
+
+      if (!employeeStats[direction]) {
+        employeeStats[direction] = 0;
+      }
+
+      employeeStats[direction] += 1;
+    }
+  });
+
+  setBuildingStats(buildingStats);
+  setEmployeeStats(employeeStats);
+};
+/////////////////////////////
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -210,6 +259,7 @@ const TableTwo = () => {
             ))}
           </tbody>
         </table>
+        
       </div>
     </div>
   );
