@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CSVLink } from "react-csv";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { red } from '@mui/material/colors';
 
 const TableTwo = () => {
   const [visits, setVisits] = useState([]);
@@ -167,10 +168,11 @@ const exportPDF = () => {
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
       <div>
-        <CSVLink data={csvData} filename={"filtered_visits.csv"}>
-          Export Filtered Data
+        <CSVLink  style={{backgroundColor:'red',color:'white' ,margin:10}} data={csvData} filename={"filtered_visits.csv"}>
+          Export  to Excel      
         </CSVLink>
-        <button onClick={exportPDF}>
+        
+        <button  style={{backgroundColor:'red',color:'white',margin:10}} onClick={exportPDF}>
         Export to PDF
       </button>
       </div>
