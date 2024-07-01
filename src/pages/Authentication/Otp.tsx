@@ -28,8 +28,8 @@ const Otp: React.FC = () => {
 
   const { email } = useAuthStore(state => state.auth);
 const [code, setOTP] = useState();
-const { state } = useLocation();
-  const user = state?.user || {};
+const location = useLocation();
+const { username } = location.state || {};
 const validationSchema = Yup.object().shape({
   
   otp: Yup.string().required('OTP is required').length(6, 'OTP must be 6 characters'),
@@ -43,7 +43,7 @@ const validationSchema = Yup.object().shape({
       const { status } = await verifyOTP({ email, code });
       if (status === 201) {
         toast.success('Verify Successfully!');
-        navigate('/auth/lockscreen', { state: { user } });
+        navigate('/auth/reset', { state: { username } });
         return Promise.resolve(); // Return a resolved promise
       } 
         return Promise.reject(new Error('Verification failed')); // Return a rejected promise

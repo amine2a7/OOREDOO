@@ -22,6 +22,9 @@ import UserListe from './pages/Dashboard/UserListe';
 import Otp from './pages/Authentication/Otp';
 import Reset from './pages/Authentication/Reset';
 import Stat from './pages/Dashboard/Stat'
+import  AuthorizeUser  from './middlware/auth';
+import ProtectRoute from './middlware/protectauth';
+
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -53,7 +56,7 @@ function App() {
           element={
             <>
               <PageTitle title="Acceuil " />
-              <Acceuil />
+              <AuthorizeUser><Acceuil /></AuthorizeUser>
             </>
           }
         />
@@ -62,7 +65,7 @@ function App() {
           element={
             <>
               <PageTitle title="Calendar " />
-              <Calendar />
+              <AuthorizeUser><Calendar /></AuthorizeUser>
             </>
           }
         />
@@ -71,7 +74,7 @@ function App() {
           element={
             <>
               <PageTitle title="Profile " />
-              <Profile />
+              <AuthorizeUser><Profile /></AuthorizeUser>
             </>
           }
         />
@@ -80,7 +83,7 @@ function App() {
           element={
             <>
               <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormElements />
+              <AuthorizeUser><FormElements /></AuthorizeUser>
             </>
           }
         />
@@ -89,7 +92,7 @@ function App() {
           element={
             <>
               <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormLayout />
+              <AuthorizeUser><FormLayout /></AuthorizeUser>
             </>
           }
         />
@@ -98,7 +101,7 @@ function App() {
           element={
             <>
               <PageTitle title="Tables " />
-              <Tables />
+              <AuthorizeUser><Tables /></AuthorizeUser>
             </>
           }
         />
@@ -107,7 +110,7 @@ function App() {
           element={
             <>
               <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Settings />
+              <AuthorizeUser><Settings /></AuthorizeUser>
             </>
           }
         />
@@ -116,7 +119,7 @@ function App() {
           element={
             <>
               <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Chart />
+              <AuthorizeUser><Chart /></AuthorizeUser>
             </>
           }
         />
@@ -125,7 +128,7 @@ function App() {
           element={
             <>
               <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Alerts />
+              <AuthorizeUser><Alerts /></AuthorizeUser>
             </>
           }
         />
@@ -134,7 +137,7 @@ function App() {
           element={
             <>
               <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Buttons />
+              <AuthorizeUser><Buttons /></AuthorizeUser>
             </>
           }
         />
@@ -179,7 +182,7 @@ function App() {
           element={
             <>
               <PageTitle title="Visites " />
-              <ListeVisite />
+              <AuthorizeUser><ListeVisite /></AuthorizeUser>
             </>
           }
         />
@@ -188,7 +191,7 @@ function App() {
           element={
             <>
               <PageTitle title="Utilisateurs " />
-              <UserListe />
+              <AuthorizeUser><ProtectRoute><UserListe /></ProtectRoute></AuthorizeUser>
             </>
           }
         />
@@ -197,7 +200,7 @@ function App() {
           element={
             <>
               <PageTitle title="Archive " />
-              <Archive />
+              <AuthorizeUser><ProtectRoute><Archive /></ProtectRoute></AuthorizeUser>
             </>
           }
         />
