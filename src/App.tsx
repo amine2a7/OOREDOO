@@ -155,7 +155,9 @@ function App() {
           element={
             <>
               <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignUp />
+              
+              <AuthorizeUser><ProtectRoute><SignUp /></ProtectRoute></AuthorizeUser>
+
             </>
           }
         />
