@@ -209,7 +209,7 @@ function App() {
           element={
             <>
               <PageTitle title="Statistique " />
-              <Stat />
+              <AuthorizeUser><ProtectRoute><Stat /></ProtectRoute></AuthorizeUser>
             </>
           }
         />
