@@ -89,7 +89,7 @@ const SignUp: React.FC = () => {
   
           // Afficher un message de succès
           alert('Registration successful!');
-          navigate('/auth/signin');
+          navigate('/acceuil');
         
       } catch (error) {
         console.error('Registration failed:', error);
