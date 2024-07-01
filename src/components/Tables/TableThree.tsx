@@ -40,9 +40,9 @@ const TableThree = () => {
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Batiment
               </th>
-              <th className="py-4 px-4 font-medium text-black dark:text-white">
+              {/* <th className="py-4 px-4 font-medium text-black dark:text-white">
                 Actions
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>
@@ -84,10 +84,10 @@ const TableThree = () => {
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     
-                  <button style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90" onClick={() => handleBadgeUpdate(badges[visit.badge]?.Badge?.identifiant)}>
+                  {/* <button style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90" onClick={() => handleBadgeUpdate(badges[visit.badge]?.Badge?.identifiant)}>
                       
                     
-                      </button>
+                      </button> */}
                   </div>
                 </td>
               </tr>

@@ -1,5 +1,6 @@
 import  { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
+import html2canvas from 'html2canvas';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -15,6 +16,15 @@ const Table1 = () => {
   const [endDate, setEndDate] = useState('');
   const [buildingStats, setBuildingStats] = useState({});
   const [employeeStats, setEmployeeStats] = useState({});
+  const handleScreenshot = () => {
+    const elementToCapture = document.getElementById('stats');
+    html2canvas(elementToCapture).then(canvas => {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'stats-screenshot.png';
+      link.click();
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -169,7 +179,13 @@ const Table1 = () => {
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
+        <br></br>
+              <button style={{ textAlign: 'center', fontWeight: 'bold' }} onClick={handleScreenshot}>Prendre une capture du statistics</button>
+
       </div>
+      <div id="stats">
+        {/* Votre composant de statistiques ici */}
+      
       <div>
         <h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>Statistiques par Bâtiment</h1>
         <Bar
@@ -184,6 +200,8 @@ const Table1 = () => {
         <h2 style={{ textAlign: 'center', fontWeight: 'bold' }}>Statistiques par Direction d'Employé</h2>
         <Bar data={employeeData} options={{ responsive: true }} />
       </div>
+      </div>
+      <button onClick={handleScreenshot}>Prendre une capture d'écran</button>
     </div>
   );
 };
