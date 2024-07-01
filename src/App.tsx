@@ -21,6 +21,7 @@ import ListeVisite from './pages/Dashboard/ListeVisite';
 import UserListe from './pages/Dashboard/UserListe';
 import Otp from './pages/Authentication/Otp';
 import Reset from './pages/Authentication/Reset';
+import Stat from './pages/Dashboard/Stat'
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -200,7 +201,18 @@ function App() {
             </>
           }
         />
+         <Route
+          path="/Stat"
+          element={
+            <>
+              <PageTitle title="Statistique " />
+              <Stat />
+            </>
+          }
+        />
       </Routes>
+     
+      
     </>
   );
 }
