@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CSVLink } from "react-csv";
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const TableTwo = () => {
   const [visits, setVisits] = useState([]);
@@ -145,7 +146,23 @@ const calculateStatistics = (visits, badgeData, employeeData) => {
   setEmployeeStats(employeeStats);
 };
 /////////////////////////////
+const exportPDF = () => {
+  const doc = new jsPDF();
+  const tableColumn = ['Nom et Prenom', 'N° Badge', 'Numero Tel', 'Personnel', 'Check-in', 'Check-out',  'Batiment'];
+  const tableRows = filteredVisits.map(visit => [
+    `${visitors[visit.visitor]?.Visitor?.nom || '-----------'} ${visitors[visit.visitor]?.Visitor?.prenom|| '-----------'}`,
+    badges[visit.badge]?.Badge?.identifiant,
+    visitors[visit.visitor]?.Visitor?.tel || employees[visit.employee]?.Employee?.tel,
+    `${employees[visit.employee]?.Employee?.nom} ${employees[visit.employee]?.Employee?.prenom}`,
+    new Date(visit.checkin).toLocaleString(),
+    new Date(visit.checkout).toLocaleString(),
+    
+    badges[visit.badge]?.Badge?.batiment,
+  ]);
 
+  doc.autoTable(tableColumn, tableRows, { startY: 10 });
+  doc.save("filtered_visits.pdf");
+};
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -153,6 +170,9 @@ const calculateStatistics = (visits, badgeData, employeeData) => {
         <CSVLink data={csvData} filename={"filtered_visits.csv"}>
           Export Filtered Data
         </CSVLink>
+        <button onClick={exportPDF}>
+        Export to PDF
+      </button>
       </div>
       <input
           type="text"
