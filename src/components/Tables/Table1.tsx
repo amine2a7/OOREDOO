@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import html2canvas from 'html2canvas';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
@@ -16,6 +16,8 @@ const Table1 = () => {
   const [endDate, setEndDate] = useState('');
   const [buildingStats, setBuildingStats] = useState({});
   const [employeeStats, setEmployeeStats] = useState({});
+
+  // Fonction pour capturer une capture d'écran
   const handleScreenshot = () => {
     const elementToCapture = document.getElementById('stats');
     html2canvas(elementToCapture).then(canvas => {
@@ -26,6 +28,7 @@ const Table1 = () => {
     });
   };
 
+  // Effet pour charger les données initiales
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,15 +74,7 @@ const Table1 = () => {
     fetchData();
   }, [badgeUpdated, startDate, endDate]);
 
-
-
-  const filteredVisits = visits.filter(visit => {
-    const startDateMatch = startDate === '' || new Date(visit.checkin) >= new Date(startDate);
-    const endDateMatch = endDate === '' || new Date(visit.checkin) <= new Date(endDate);
-    const buildingMatch = searchTerm === '' || badges[visit.badge]?.Badge?.batiment.includes(searchTerm);
-    return startDateMatch && endDateMatch && buildingMatch;
-  });
-
+  // Fonction pour calculer les statistiques
   const calculateStatistics = (visits, badgeData, employeeData, startDate, endDate) => {
     const buildingStats = {};
     const employeeStats = {};
@@ -96,16 +91,13 @@ const Table1 = () => {
 
           if (!buildingStats[building]) {
             buildingStats[building] = {};
-            console.log(buildingStats);
           }
 
           if (!buildingStats[building][year]) {
             buildingStats[building][year] = 0;
-            console.log(buildingStats);
           }
 
           buildingStats[building][year] += 1;
-          console.log(buildingStats);
         }
 
         if (employee) {
@@ -122,13 +114,14 @@ const Table1 = () => {
 
     setBuildingStats(buildingStats);
     setEmployeeStats(employeeStats);
-    console.log('Building Stats:', buildingStats); // Debugging log
   };
 
+  // Préparation des données pour le graphique des bâtiments
   const buildingLabels = [];
   const buildingDataSets = [];
+  const buildingColors = ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 99, 132, 0.2)']; // Couleurs pour chaque bâtiment
 
-  Object.keys(buildingStats).forEach(building => {
+  Object.keys(buildingStats).forEach((building, index) => {
     const buildingData = [];
     const labels = [];
 
@@ -137,20 +130,20 @@ const Table1 = () => {
       buildingData.push(buildingStats[building][year]);
     });
 
-    if (labels.length > buildingLabels.length) {
-      buildingLabels.splice(0, buildingLabels.length, ...labels);
-      console.log(buildingStats);
-    }
-
     buildingDataSets.push({
       label: building,
       data: buildingData,
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
+      backgroundColor: buildingColors[index % buildingColors.length],
+      borderColor: buildingColors[index % buildingColors.length],
       borderWidth: 1
     });
+
+    if (labels.length > buildingLabels.length) {
+      buildingLabels.splice(0, buildingLabels.length, ...labels);
+    }
   });
 
+  // Données pour le graphique des employés
   const employeeData = {
     labels: Object.keys(employeeStats),
     datasets: [
@@ -164,6 +157,7 @@ const Table1 = () => {
     ]
   };
 
+  // Affichage du composant
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -179,29 +173,27 @@ const Table1 = () => {
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
-        <br></br>
-              <button style={{ textAlign: 'center', fontWeight: 'bold' }} onClick={handleScreenshot}>Prendre une capture du statistics</button>
+        <br/>
+        <button onClick={handleScreenshot}>Prendre une capture d'écran</button>
+      </div>
 
-      </div>
       <div id="stats">
-        {/* Votre composant de statistiques ici */}
-      
-      <div>
-        <h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>Statistiques par Bâtiment</h1>
-        <Bar
-          data={{
-            labels: buildingLabels,
-            datasets: buildingDataSets
-          }}
-          options={{ responsive: true }}
-        />
+        <div>
+          <h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>Statistiques par Bâtiment</h1>
+          <Bar
+            data={{
+              labels: buildingLabels,
+              datasets: buildingDataSets
+            }}
+            options={{ responsive: true }}
+          />
+        </div>
+
+        <div>
+          <h2 style={{ textAlign: 'center', fontWeight: 'bold' }}>Statistiques par Direction d'Employé</h2>
+          <Bar data={employeeData} options={{ responsive: true }} />
+        </div>
       </div>
-      <div>
-        <h2 style={{ textAlign: 'center', fontWeight: 'bold' }}>Statistiques par Direction d'Employé</h2>
-        <Bar data={employeeData} options={{ responsive: true }} />
-      </div>
-      </div>
-      <button onClick={handleScreenshot}>Prendre une capture d'écran</button>
     </div>
   );
 };
