@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
 
@@ -7,8 +6,7 @@ const TableThree = () => {
   const [users, setUsers] = useState([]);
   const [connectedUsers, setConnectedUsers] = useState([]);
 
-  // Récupération des utilisateurs depuis l'API
-  useEffect(() => {
+ 
   const [User, setUser] = useState([]);
   const [file, setFile] = useState(null);
   const [csvData, setCsvData] = useState([]);
