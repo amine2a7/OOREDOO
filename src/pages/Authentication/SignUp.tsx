@@ -137,18 +137,18 @@ const SignUp: React.FC = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign Up to ooredoo
+                Register a ooredoo
               </h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    First Name
+                    Nom
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       name="firstName"
-                      placeholder="Enter your first name"
+                      placeholder="Donner votre Nom"
                       className={`w-full rounded-lg border ${errors.firstName ? 'border-red-500' : 'border-stroke'} bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
                     />
                     {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
@@ -156,13 +156,13 @@ const SignUp: React.FC = () => {
                 </div>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Last Name
+                    Prenom
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       name="lastName"
-                      placeholder="Enter your last name"
+                      placeholder="Donner votre Prenom"
                       className={`w-full rounded-lg border ${errors.lastName ? 'border-red-500' : 'border-stroke'} bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
                       />
                       {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
@@ -170,13 +170,13 @@ const SignUp: React.FC = () => {
                 </div>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    User Name
+                    Nom-utilisateur
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       name="userName"
-                      placeholder="Enter your username"
+                      placeholder="Donner votre username"
                       className={`w-full rounded-lg border ${errors.userName ? 'border-red-500' : 'border-stroke'} bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
                       />
                       {errors.userName && <p className="text-red-500">{errors.userName}</p>}
@@ -190,7 +190,7 @@ const SignUp: React.FC = () => {
                     <input
                       type="email"
                       name="email"
-                      placeholder="Enter your email"
+                      placeholder="Donner votre  email"
                       
                       className={`w-full rounded-lg border ${errors.email ? 'border-red-500' : 'border-stroke'} bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
                       />
@@ -199,13 +199,13 @@ const SignUp: React.FC = () => {
                 </div>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Password
+                    Mot de passe
                   </label>
                   <div className="relative">
                     <input
                       type="password"
                       name="password"
-                      placeholder="Enter your password"
+                      placeholder="Donner votre Mot de passe"
                       className={`w-full rounded-lg border ${errors.password ? 'border-red-500' : 'border-stroke'} bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
                       />
                       {errors.password && <p className="text-red-500">{errors.password}</p>}
@@ -213,13 +213,13 @@ const SignUp: React.FC = () => {
                 </div>
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Re-type Password
+                    Confirmer Mot de passe
                   </label>
                   <div className="relative">
                     <input
                       type="password"
                       name="confirmPassword"
-                      placeholder="Re-enter your password"
+                      placeholder="Donner votre Mot de passe"
                       className={`w-full rounded-lg border ${errors.confirmPassword ? 'border-red-500' : 'border-stroke'} bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary`}
                       />
                       {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
@@ -227,7 +227,7 @@ const SignUp: React.FC = () => {
                 </div>
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                  Profile Picture
+                  Photo du Profile 
                   </label>
                   <div className="relative">
                     <input

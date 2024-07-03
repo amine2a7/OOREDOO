@@ -89,19 +89,19 @@ const SignIn: React.FC = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to ooredoo
+                Connecté vers ooredoo
               </h2>
 
               <form onSubmit={handleLogin}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Username
+                    Nom Utilisateur
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       name="username" // Add name attribute
-                      placeholder="Enter your Username"
+                      placeholder="Donner votre Nom Utilisateur(Username) "
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                     <span className="absolute right-4 top-4">
@@ -126,13 +126,13 @@ const SignIn: React.FC = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                   Password
+                   Mot de Passe
                   </label>
                   <div className="relative">
                     <input
                       type="password"
                       name="password" // Add name attribute
-                      placeholder="Enter your password"
+                      placeholder="Donner votre Mot de Passe"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
                     <span className="absolute right-4 top-4">
