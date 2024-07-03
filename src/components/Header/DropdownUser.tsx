@@ -53,13 +53,40 @@ const DropdownUser = () => {
     fetchUserData();
   }, []);
 
-  function userLogout(){
-    localStorage.removeItem('token');
-    navigate('/auth/signin')
-    window.location.reload();
-
+  function performLogout() {
+    return fetch('http://localhost:5000/api/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          localStorage.removeItem('token');
+          return true;
+        } else {
+          return response.json().then((error) => {
+            console.error('Error during logout:', error);
+            return false;
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('Error during logout:', error);
+        return false;
+      });
   }
 
+  const handleLogout = async () => {
+    const success = await performLogout();
+    if (success) {
+      navigate('/auth/signin');
+      window.location.reload();
+    }
+  };
+
+  
   return (
     <div className="relative">
       <Link
@@ -142,7 +169,7 @@ const DropdownUser = () => {
           </li>
          
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={userLogout}>
+        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={handleLogout}>
           <svg
             className="fill-current"
             width="22"
