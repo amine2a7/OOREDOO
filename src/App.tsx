@@ -47,7 +47,7 @@ function App() {
           element={
             <>
               <PageTitle title="eCommerce Dashboard " />
-              <ECommerce />
+              <AuthorizeUser><ECommerce /></AuthorizeUser>
             </>
           }
         />

@@ -1,19 +1,34 @@
-import { Package } from '../../types/package';
-import React from 'react';
-
-
-
+import React, { useState, useEffect } from 'react';
 
 const TableThree = () => {
-  const [User, setUser] = React.useState([]);
-  React.useEffect(() => {
+  const [users, setUsers] = useState([]);
+  const [connectedUsers, setConnectedUsers] = useState([]);
+
+  // Récupération des utilisateurs depuis l'API
+  useEffect(() => {
     fetch("http://localhost:5000/api/getall")
       .then((res) => res.json())
       .then((result) => {
-        setUser(result);
+        setUsers(result);
       });
   }, []);
 
+  // Récupération des utilisateurs connectés depuis l'API dédiée
+  useEffect(() => {
+    fetch("http://localhost:5000/api/admin/connected-users")
+      .then((res) => res.json())
+      .then((result) => {
+        setConnectedUsers(result.connectedUsers); // Accès à connectedUsers dans la réponse
+      });
+  }, []);
+
+  // Vérifier si un utilisateur est connecté
+  const isConnected = (username) => {
+    if (!Array.isArray(connectedUsers)) {
+      return false; // Retourne false si connectedUsers n'est pas un tableau
+    }
+    return connectedUsers.some(user => user.username === username);
+  };
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -21,18 +36,17 @@ const TableThree = () => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-            <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-               Matricule
+              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                Matricule
               </th>
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                 Nom et Prenom
               </th>
-              
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-              Username
+                Username
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-               Email
+                Email
               </th>
               <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                 Role
@@ -40,54 +54,55 @@ const TableThree = () => {
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Batiment
               </th>
-              {/* <th className="py-4 px-4 font-medium text-black dark:text-white">
-                Actions
-              </th> */}
+              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                Statut
+              </th>
             </tr>
           </thead>
           <tbody>
-          {User.map((users) => (
-              <tr key={users.key}>
+            {users.map((user) => (
+              <tr key={user.key}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                  {users.identifiant}
+                    {user.identifiant}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {users.firstName}
+                    {user.firstName}
                   </h5>
-                  <p className="text-sm">{users.lastName}</p>
+                  <p className="text-sm">{user.lastName}</p>
                 </td>
-                
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                  {users.username} 
+                    {user.username}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                  {users.email}
+                    {user.email}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                  {users.role}
+                    {user.role}
                   </p>
-                  
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                  {users.batiment}
+                    {user.batiment}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <div className="flex items-center space-x-3.5">
-                    
-                  {/* <button style={{ backgroundColor: '#0FAC71' ,width:400 ,height:40}} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90" onClick={() => handleBadgeUpdate(badges[visit.badge]?.Badge?.identifiant)}>
-                      
-                    
-                      </button> */}
+                  <div className="flex items-center">
+                    <div
+                      className={`w-3 h-3 rounded-full mr-2 ${
+                        isConnected(user.username) ? 'bg-green-500' : 'bg-red-500'
+                      }`}
+                    />
+                    <span className="text-xs">
+                      {isConnected(user.username) ? 'Connecté' : 'Non connecté'}
+                    </span>
                   </div>
                 </td>
               </tr>
