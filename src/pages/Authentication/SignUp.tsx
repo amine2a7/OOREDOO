@@ -5,6 +5,8 @@ import Logo from '../../images/logo/logo3.png';
 import phone from '../../images/logo/phone.png';
 import perso from '../../images/logo/perso.png';
 import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
+import DefaultLayout from '../../layout/DefaultLayout';
+
 
 
 
@@ -22,7 +24,7 @@ const SignUp: React.FC = () => {
       display: 'flex',
       alignItems: 'center',
       marginTop: '15px',
-      marginLeft: '150px',
+      marginLeft: '50px',
     },
     persoImg: {
       width: '300px',
@@ -117,6 +119,7 @@ const SignUp: React.FC = () => {
   
 
   return (
+    <DefaultLayout>
     <div>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
@@ -247,20 +250,21 @@ const SignUp: React.FC = () => {
                   />
                 </div>
                
-                <div className="mt-6 text-center">
+                {/* <div className="mt-6 text-center">
                   <p className="text-base font-medium text-body-color">
                     Already have an account?{' '}
                     <Link to="/auth/signin" className="text-primary hover:underline">
                       Sign In
                     </Link>
                   </p>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>
         </div>
       </div>
     </div>
+    </DefaultLayout>
   );
 };
 
