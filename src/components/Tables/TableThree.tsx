@@ -1,12 +1,13 @@
-import { Package } from '../../types/package';
-import React from 'react';
-
-
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { CSVLink } from 'react-csv';
 
 const TableThree = () => {
-  const [User, setUser] = React.useState([]);
-  React.useEffect(() => {
+  const [User, setUser] = useState([]);
+  const [file, setFile] = useState(null);
+  const [csvData, setCsvData] = useState([]);
+
+  useEffect(() => {
     fetch("http://localhost:5000/api/getall")
       .then((res) => res.json())
       .then((result) => {
@@ -14,10 +15,45 @@ const TableThree = () => {
       });
   }, []);
 
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      alert('Please upload a file first!');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post('http://localhost:5000/employee/regenere-employee', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      setCsvData(response.data.newEmployees);
+      alert('Employees regenerated successfully');
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Error uploading file');
+    }
+  };
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
+      <div>
+      <input type="file" onChange={handleFileChange} />
+      <button style={{ backgroundColor: 'red', color: 'white', margin: 10 }} onClick={handleUpload}>
+        Upload and Process
+      </button>
+
+      
+    </div>
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
