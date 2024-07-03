@@ -4,7 +4,7 @@ import React from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 
 import TableThree from '../../components/Tables/TableThree';
-import { Link } from 'react-router-dom';
+
  
 const UserListe: React.FC = () => {
   return (
@@ -12,11 +12,7 @@ const UserListe: React.FC = () => {
     <DefaultLayout>
      
         <br></br>
-        <Link to="/auth/signup" className="text-primary">
-                  <button  style={{ backgroundColor: '#FF0000' ,width:200 ,height:40,alignItems:'center' }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
-                 
-                  Register
-                </button>                   </Link>
+        
                 <br></br>
                 <button  style={{ backgroundColor: '#FF0000' ,width:600 ,height:40,alignItems:'center' }} className="flex w-full justify-center rounded  p-3 font-medium text-gray hover:bg-opacity-90" >
                  

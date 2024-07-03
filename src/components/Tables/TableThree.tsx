@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
+import { Link } from 'react-router-dom';
 
 const TableThree = () => {
   const [users, setUsers] = useState([]);
@@ -69,9 +70,10 @@ const TableThree = () => {
       <div>
       <input type="file" onChange={handleFileChange} />
       <button style={{ backgroundColor: 'red', color: 'white', margin: 10 }} onClick={handleUpload}>
-        Upload and Process
+        Mise A jour Employee
       </button>
-
+      <Link to="/auth/signup" className="text-primary white" style={{ backgroundColor: '#FF0000' ,color:'#FFFFFF',width:200 ,height:40,alignItems:'center' }}>
+                  Register                  </Link>
       
     </div>
         <table className="w-full table-auto">
