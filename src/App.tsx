@@ -24,6 +24,7 @@ import Reset from './pages/Authentication/Reset';
 import Stat from './pages/Dashboard/Stat'
 import  AuthorizeUser  from './middlware/auth';
 import ProtectRoute from './middlware/protectauth';
+import Rdv from './pages/Dashboard/Rdv';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -185,6 +186,15 @@ function App() {
             <>
               <PageTitle title="Visites " />
               <AuthorizeUser><ListeVisite /></AuthorizeUser>
+            </>
+          }
+        />
+        <Route
+          path="/Rdv"
+          element={
+            <>
+              <PageTitle title="Rdv " />
+              <AuthorizeUser><Rdv /></AuthorizeUser>
             </>
           }
         />
