@@ -43,9 +43,12 @@ const TableOne = () => {
         case 'zenith2':
           url = "http://localhost:5000/visit/getAllVisitsDailyzenith2";
           break;
-        case 'charguia':
-          url = "http://localhost:5000/visit/getAllVisitsDailycharguia";
+        case 'charguiadt':
+          url = "http://localhost:5000/visit/getAllVisitsDailycharguiadt";
           break;
+          case 'charguiadsc':
+            url = "http://localhost:5000/visit/getAllVisitsDailycharguiadsc";
+            break;
         case 'sfax':
           url = "http://localhost:5000/visit/getAllVisitsDailysfax";
           break;

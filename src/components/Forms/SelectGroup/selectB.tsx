@@ -50,9 +50,12 @@ const SelectB: React.FC<SelectBProps> = ({ onChange }) => {
       url = "http://localhost:5000/badge/unavailable-visitorsZ1";
     } else if (token === 'zenith2') {
       url = "http://localhost:5000/badge/unavailable-visitorsZ2";
-    } else if (token === 'charguia') {
-      url = "http://localhost:5000/badge/unavailable-visitorscharguia";
-    } else if (token === 'sfax') {
+    } else if (token === 'charguiadt') {
+      url = "http://localhost:5000/badge/unavailable-visitorscharguiadt";
+    } else if (token === 'charguiadsc') {
+      url = "http://localhost:5000/badge/unavailable-visitorscharguiadsc";
+    }
+     else if (token === 'sfax') {
       url = "http://localhost:5000/badge/unavailable-visitorssfax";
     } else {
       url = "http://localhost:5000/badge/getAllBadges";

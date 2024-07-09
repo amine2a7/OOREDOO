@@ -36,16 +36,19 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({ selectedOption, setSele
           <option value="" disabled className="text-body dark:text-bodydark">
             Choisir Batiment
           </option>
-          <option value="Zenith1" className="text-body dark:text-bodydark">
+          <option value="zenith1" className="text-body dark:text-bodydark">
             Zénith 1
           </option>
-          <option value="Zenith2" className="text-body dark:text-bodydark">
+          <option value="zenith2" className="text-body dark:text-bodydark">
             Zénith 2
           </option>
-          <option value="Charguia" className="text-body dark:text-bodydark">
-            Charguia
+          <option value="charguiadt" className="text-body dark:text-bodydark">
+            Charguia Direction Technique
           </option>
-          <option value="Sfax" className="text-body dark:text-bodydark">
+          <option value="charguiadsc" className="text-body dark:text-bodydark">
+            Charguia Direction Services
+          </option>
+          <option value="sfax" className="text-body dark:text-bodydark">
             Sfax
           </option>
         </select>
